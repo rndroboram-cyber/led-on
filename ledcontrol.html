@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 Internet LED Control</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body style="text-align:center; font-family:Arial;">
+
+<h2>ESP32 LED Control (Internet)</h2>
+
+<button onclick="sendON()" style="padding:20px;font-size:20px;">ON</button>
+<br><br>
+<button onclick="sendOFF()" style="padding:20px;font-size:20px;">OFF</button>
+
+<script>
+const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
+
+client.on('connect', function () {
+  console.log("Connected");
+});
+
+function sendON(){
+  client.publish('esp32/ledcontrol', 'ON');
+}
+
+function sendOFF(){
+  client.publish('esp32/ledcontrol', 'OFF');
+}
+</script>
+
+</body>
+</html>
