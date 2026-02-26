@@ -4,27 +4,34 @@
   <title>ESP32 Internet LED Control</title>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
+
 <body style="text-align:center; font-family:Arial;">
 
-<h2>ESP32 LED Control (Internet)</h2>
+<h2>ESP32 LED Control - Internet</h2>
 
-<button onclick="sendON()" style="padding:20px;font-size:20px;">ON</button>
+<button onclick="sendON()" style="padding:20px;font-size:20px;background:green;color:white;">
+  LED ON
+</button>
+
 <br><br>
-<button onclick="sendOFF()" style="padding:20px;font-size:20px;">OFF</button>
+
+<button onclick="sendOFF()" style="padding:20px;font-size:20px;background:red;color:white;">
+  LED OFF
+</button>
 
 <script>
 const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
 
 client.on('connect', function () {
-  console.log("Connected");
+  console.log("Connected to MQTT");
 });
 
 function sendON(){
-  client.publish('esp32/ledcontrol', 'ON');
+  client.publish('esp32/ledcontrol123', 'ON');
 }
 
 function sendOFF(){
-  client.publish('esp32/ledcontrol', 'OFF');
+  client.publish('esp32/ledcontrol123', 'OFF');
 }
 </script>
 
