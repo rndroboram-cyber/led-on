@@ -5,34 +5,47 @@
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 
-<body style="text-align:center; font-family:Arial;">
+<body style="text-align:center; font-family:Arial; background:#f2f2f2;">
 
-<h2>ESP32 LED Control - Internet</h2>
+<h2>🌍 ESP32 LED Control (Internet)</h2>
 
-<button onclick="sendON()" style="padding:20px;font-size:20px;background:green;color:white;">
+<p>Status: <span id="status">Connecting...</span></p>
+
+<button onclick="sendON()" 
+style="padding:20px;font-size:20px;background:green;color:white;border:none;border-radius:8px;">
   LED ON
 </button>
 
 <br><br>
 
-<button onclick="sendOFF()" style="padding:20px;font-size:20px;background:red;color:white;">
+<button onclick="sendOFF()" 
+style="padding:20px;font-size:20px;background:red;color:white;border:none;border-radius:8px;">
   LED OFF
 </button>
 
 <script>
+
+// Connect to HiveMQ WebSocket
 const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
 
 client.on('connect', function () {
-  console.log("Connected to MQTT");
+  document.getElementById("status").innerHTML = "Connected to Cloud ✅";
 });
 
+client.on('error', function () {
+  document.getElementById("status").innerHTML = "Connection Error ❌";
+});
+
+// Publish ON
 function sendON(){
-  client.publish('esp32/ledcontrol123', 'ON');
+  client.publish('esp32/ledcontrol', 'ON');
 }
 
+// Publish OFF
 function sendOFF(){
-  client.publish('esp32/ledcontrol123', 'OFF');
+  client.publish('esp32/ledcontrol', 'OFF');
 }
+
 </script>
 
 </body>
